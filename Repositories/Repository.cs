@@ -175,7 +175,11 @@ namespace ApiPemesanan.Repositories
             using (var connection = _context.CreateConnection())
             {
                 var menu = await connection.QueryAsync<Pesanan>(QU);
-                nomorSebelumnya = menu.Select(x => x.nomor_pesanan).FirstOrDefault();
+                if(menu.Count() != 0)
+                {
+                    nomorSebelumnya = menu.Select(x => x.nomor_pesanan).FirstOrDefault();
+                }
+                nomorSebelumnya = nomorPesanan + tmdate + "-000";
             }
             tt = nomorSebelumnya.Substring(3, 8);
             yy = Convert.ToInt32(nomorSebelumnya.Substring(12, 3));
